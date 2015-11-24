@@ -10,8 +10,23 @@
 ;; introduce state into application via global atom
 (def app-state (atom {:count 0}))
 
+(defn read [{:keys [state] :as env} key params]
+  (let [st @state]
+    (if-let [[_ value] (find st key)]
+      {:value value}
+      {:value :not-found})))
+
+(defn mutate [{:keys [state] :as env} key params]
+  (if (= 'increment key)
+    {:value {:keys [:count]}
+     :action #(swap! state update-in [:count] inc)}
+    {:value :not-found}))
+
 ;; creates incremental counter button
 (defui Counter
+  static om/IQuery
+  (query [this]
+    [:count])
   Object
   (render [this]
     (let [{:keys [count]} (om/props this)]
@@ -25,7 +40,9 @@
 
 ;; re-renders root
 (def reconciler
-  (om/reconciler {:state app-state}))
+  (om/reconciler
+    {:state app-state
+     :parser (om/parser {:read read :mutate mutate})}))
 
 (om/add-root! reconciler
   Counter (gdom/getElement "app"))

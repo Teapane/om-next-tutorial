@@ -1,0 +1,51 @@
+[0mCompiling "resources/public/js/main.js" from ["src"]...
+Compiling src/om_tutorial/core.cljs
+WARNING: Bad method signature in protocol implementation, object does not declare method called render at line 10 src/om_tutorial/core.cljs
+WARNING: Use of undeclared Var om-tutorial.core/object at line 10 src/om_tutorial/core.cljs
+WARNING: Symbol object is not a protocol at line 10 src/om_tutorial/core.cljs
+Compiling target/figwheel_temp/dev/figwheel/connect.cljs
+notifying browser that file changed:  resources/public/js/goog/deps.js
+notifying browser that file changed:  resources/public/js/cljs_deps.js
+notifying browser that file changed:  out/om_tutorial/core.js
+[32mSuccessfully compiled "resources/public/js/main.js" in 0.315 seconds.[0m
+[0mCompiling "resources/public/js/main.js" from ["src"]...
+Compiling src/om_tutorial/core.cljs
+Compiling target/figwheel_temp/dev/figwheel/connect.cljs
+notifying browser that file changed:  out/om_tutorial/core.js
+[32mSuccessfully compiled "resources/public/js/main.js" in 0.173 seconds.[0m
+[0mCompiling "resources/public/js/main.js" from ["src"]...
+Compiling src/om_tutorial/core.cljs
+WARNING: Use of undeclared Var om-tutorial.core/i at line 13 src/om_tutorial/core.cljs
+Compiling target/figwheel_temp/dev/figwheel/connect.cljs
+notifying browser that file changed:  out/om_tutorial/core.js
+[32mSuccessfully compiled "resources/public/js/main.js" in 0.194 seconds.[0m
+[0mCompiling "resources/public/js/main.js" from ["src"]...
+Compiling src/om_tutorial/core.cljs
+Compiling target/figwheel_temp/dev/figwheel/connect.cljs
+notifying browser that file changed:  out/om_tutorial/core.js
+[32mSuccessfully compiled "resources/public/js/main.js" in 0.163 seconds.[0m
+[0mCompiling "resources/public/js/main.js" from ["src"]...
+Compiling src/om_tutorial/core.cljs
+Compiling target/figwheel_temp/dev/figwheel/connect.cljs
+notifying browser that file changed:  out/om_tutorial/core.js
+[32mSuccessfully compiled "resources/public/js/main.js" in 0.167 seconds.[0m
+[0mCompiling "resources/public/js/main.js" from ["src"]...
+Compiling src/om_tutorial/core.cljs
+Compiling target/figwheel_temp/dev/figwheel/connect.cljs
+notifying browser that file changed:  out/om_tutorial/core.js
+[32mSuccessfully compiled "resources/public/js/main.js" in 0.168 seconds.[0m
+[0mCompiling "resources/public/js/main.js" from ["src"]...
+Compiling src/om_tutorial/core.cljs
+[31mCompiling "resources/public/js/main.js" failed.
+[0mERROR: EOF while reading, starting at line 10 and column 1 on file /Users/tlong/source/om-tutorial/src/om_tutorial/core.cljs, line 18, column 1
+[32mSuccessfully compiled "resources/public/js/main.js" in 0.088 seconds.[0m
+[0mCompiling "resources/public/js/main.js" from ["src"]...
+Compiling src/om_tutorial/core.cljs
+[31mCompiling "resources/public/js/main.js" failed.
+[0mERROR: EOF while reading, starting at line 10 and column 1 on file /Users/tlong/source/om-tutorial/src/om_tutorial/core.cljs, line 20, column 1
+[32mSuccessfully compiled "resources/public/js/main.js" in 0.111 seconds.[0m
+[0mCompiling "resources/public/js/main.js" from ["src"]...
+Compiling src/om_tutorial/core.cljs
+Compiling target/figwheel_temp/dev/figwheel/connect.cljs
+notifying browser that file changed:  out/om_tutorial/core.js
+[32mSuccessfully compiled "resources/public/js/main.js" in 0.179 seconds.[0m

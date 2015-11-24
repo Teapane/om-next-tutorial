@@ -24,4 +24,4 @@ Leiningen 2.5.3 on Java 1.8.0_60 Java HotSpot(TM) 64-Bit Server VM
 ```
 # To start the Server
 `$ lein run -m clojure.main script/figwheel.clj`
-[Visit](http://localhost:3449)
+[Visit localhost:3449](http://localhost:3449)

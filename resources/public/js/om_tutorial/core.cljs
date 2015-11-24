@@ -3,104 +3,62 @@
             [om.next :as om :refer-macros [defui]]
             [om.dom :as dom]))
 
-;; prints to console
+;; prints to js console
 (enable-console-print!)
-(println "Yo, yo Teeapane")
+(println "Tutorial, part 2")
 
-;; introduce state into application via global atom
-;; Fourth example
-(def app-state
-  (atom
-    {:app/title "Animals"
-     :animals/list
-     [[1 "Tiger"] [2 "Killer Whale"] [3 "parrot"] [4 "dog"] [5 "monkey"]
-      [6 "Snake"] [7 "aardvark"] [8 "dolphin"] [9 "chameleon"] [10 "fly"]]}))
+(def init-data
+  {:list/one [{:name "Tyler" :points 10}
+              {:name "Teapane" :points 0}
+              {:name "John" :points 1}]
+   :list/two [{:name "Mary" :points 12 :age 100}
+              {:name "Kate" :points 1}]})
 
-(defmulti read (fn [env key params] key))
+(defmulti read om/dispatch)
 
-(defmethod read :default
-  [{:keys [state] :as en} key params]
+(defn get-people [state key]
   (let [st @state]
-    (if-let [[_ value] (find st key)]
-      {:value value}
-      {:value :not-found})))
+    (into [] (map #(get-in st %)) (get st key))))
 
-(defmethod read :animals/list
-  [{:keys [state] :as env} key {:keys [start end]}]
-  {:value (subvec (:animals/list @state) start end)})
+(defmethod read :list/one
+  [{:keys [state] :as env} key params]
+  {:value (get-people state key)})
 
-(defui AnimalsList
-  static om/IQueryParams
-  (params [this]
-   {:start 0 :end 10})
+(defmethod read :list/two
+  [{:keys [state] :as env} key params]
+  {:value (get-people state key)})
+
+(defui Person
+  static om/Ident
+  (ident [this {:keys [name]}]
+         [:person/by-name name])
   static om/IQuery
   (query [this]
-    '[:app/title (:animals/list {:start ?start :end ?end})])
-  Object
-  (render [this]
-    (let [{:keys [app/title animals/list]} (om/props this)]
-      (dom/div nil
-       (dom/h2 nil title)
-       (apply dom/ul nil
-        (map
-          (fn [[i name]]
-            (dom/li nil (str i ". " name)))
-          list))))))
+         `[:name :points]))
 
-;; re-renders root
-(def reconciler
-  (om/reconciler
-    {:state app-state
-     :parser (om/parser {:read read})}))
+(defui RootView
+  static om/IQuery
+  (query [this]
+    (let [subquery (om/get-query Person)]
+      `[{:list/one ~subquery} {:list/two ~subquery}])))
 
-(om/add-root! reconciler
-  AnimalsList (gdom/getElement "app"))
+(defmulti mutate om/dispatch)
 
-;; first example
-;;(defui HelloWorld
-  ;;Object
-  ;;(render [this]
-    ;;(dom/div nil (get (om/props this) :title))))
+;; increment the point values by name
+(defmethod mutate 'points/increment
+  [{:keys [state]} _ {:keys [name]}]
+  {:action
+   (fn []
+     (swap! state update-in
+       [:person/by-name name :points]
+       inc))})
 
-;;(def hello (om/factory HelloWorld))
+;; decrement the point values by name
+(defmethod mutate 'points/decrement
+  [{:keys [state] _ {:keys [name]}}]
+  {:action
+   (fn []
+     (swap! state update-in
+      [:person/by-name name :points]
+      #(let [n (dec %)] (if (neg? n) 0 n))))})
 
-;; first example
-;;(js/ReactDOM.render
-  ;;(hello {:title "Hello, World!"})
-  ;;(gdom/getElement "app"))
-
-;; Second Example
-;;(js/ReactDOM.render
-  ;;(apply dom/div nil
-    ;;(map #(hello {:title (str "Hello " %)})
-      ;;(range 10)))
-  ;;(gdom/getElement "app"))
-
-;; example 3 mutate/read
-;;(defn read [{:keys [state] :as env} key params]
-  ;;(let [st @state]
-    ;;(if-let [[_ value] (find st key)]
-      ;;{:value value}
-      ;;{:value :not-found})))
-
-;;(defn mutate [{:keys [state] :as env} key params]
-  ;;(if (= 'increment key)
-    ;;{:value {:keys [:count]}
-     ;;:action #(swap! state update-in [:count] inc)}
-    ;;{:value :not-found}))
-
-;; creates incremental counter button
-;;(defui Counter
-  ;;static om/IQuery
-  ;;(query [this]
-    ;;[:count])
-  ;;Object
-  ;;(render [this]
-    ;;(let [{:keys [count]} (om/props this)]
-      ;;(dom/div nil
-        ;;(dom/span nil (str "Count: " count))
-        ;;(dom/button
-          ;;#js {:onClick
-               ;;(fn [e]
-                ;; (swap! app-state update-in [:count] inc))}
-          ;;"Click me!")))))
